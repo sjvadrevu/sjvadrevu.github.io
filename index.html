@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shashank Vadrevu: AI Product Leader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #fffef9;
+      --border: rgba(26,25,23,0.12);
+      --border-mid: rgba(26,25,23,0.22);
+      --accent: #b5451b;
+      --accent-dim: rgba(181,69,27,0.08);
+      --ink: #1a1917;
+      --ink-muted: #4a4845;
+      --ink-faint: #888580;
+      --radius: 4px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(245,244,240,0.92);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 58px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px; color: var(--accent); letter-spacing: 0.04em; line-height: 1;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      color: var(--ink-muted); text-decoration: none;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px;
+      max-width: 900px; margin: 0 auto;
+      border-top: 4px solid var(--accent);
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--ink-faint); letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 20px; opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+    }
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 10vw, 110px); line-height: 0.95;
+      color: var(--ink); letter-spacing: 0.02em;
+      margin-bottom: 16px;
+      opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hero-name span { color: var(--accent); }
+    .hero-keywords {
+      font-family: 'Lora', serif;
+      font-size: clamp(18px, 2.4vw, 26px); font-weight: 400;
+      font-style: italic; color: var(--ink-muted);
+      margin-bottom: 24px; line-height: 1.3;
+      opacity: 0; animation: fadeUp 0.6s 0.28s forwards;
+    }
+    .kw-wrapper {
+      display: inline-block; overflow: hidden;
+      height: 1.32em; vertical-align: bottom;
+      min-width: 300px; position: relative; top: 0.04em;
+    }
+    .kw-track {
+      display: flex; flex-direction: column;
+      transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .kw-item {
+      display: block; color: var(--accent); font-style: italic;
+      white-space: nowrap; line-height: 1.32; flex-shrink: 0;
+    }
+    .hero-role {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500;
+      color: var(--ink-faint); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0; animation: fadeUp 0.6s 0.34s forwards;
+    }
+    .hero-desc {
+      max-width: 560px; font-size: 15px; color: var(--ink-muted);
+      line-height: 1.7; margin-bottom: 40px;
+      opacity: 0; animation: fadeUp 0.6s 0.44s forwards;
+    }
+    .hero-links {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.6s 0.54s forwards;
+    }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      color: var(--ink-muted); text-decoration: none;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.15s; border-bottom: 1px solid transparent;
+    }
+    .hero-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .hero-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* STATS */
+    .stats {
+      background: var(--surface);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 40px 48px;
+    }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    }
+    .stat {
+      text-align: center; padding: 0 20px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 44px; color: var(--accent); line-height: 1;
+      margin-bottom: 6px; letter-spacing: 0.02em;
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--ink-faint); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    /* SECTIONS */
+    section { padding: 96px 48px; max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 5vw, 52px); line-height: 1;
+      letter-spacing: 0.02em; margin-bottom: 14px; color: var(--ink);
+    }
+    .section-subtitle {
+      font-size: 15px; color: var(--ink-muted); max-width: 520px;
+      margin-bottom: 52px; line-height: 1.65;
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      border: none; border-top: 1px solid var(--border);
+      max-width: 900px; margin: 0 auto;
+    }
+
+    /* PILLARS */
+    .pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .pillar {
+      background: var(--surface); padding: 32px;
+      transition: background 0.2s;
+    }
+    .pillar:hover { background: var(--bg); }
+    .pillar-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--accent);
+      line-height: 1; margin-bottom: 14px; opacity: 0.7;
+    }
+    .pillar-title {
+      font-family: 'Lora', serif; font-size: 16px; font-weight: 600;
+      margin-bottom: 8px; color: var(--ink);
+    }
+    .pillar-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+
+    /* PROJECTS */
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+      cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+      border-top: 3px solid var(--accent);
+    }
+    .project-card:hover { border-color: rgba(181,69,27,0.4); box-shadow: 0 4px 24px rgba(181,69,27,0.08); }
+    .project-tag {
+      display: inline-block; padding: 2px 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .tag-live { background: rgba(181,69,27,0.08); color: var(--accent); }
+    .project-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+      color: var(--ink); letter-spacing: 0.02em; margin-bottom: 8px;
+    }
+    .project-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.65; margin-bottom: 20px; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .stack-pill {
+      padding: 3px 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--ink-faint); letter-spacing: 0.04em;
+    }
+    .project-hint {
+      margin-top: 16px; font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--accent); letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .project-arrow {
+      position: absolute; top: 28px; right: 28px;
+      color: var(--ink-faint); font-size: 16px; transition: color 0.2s;
+    }
+    .project-card:hover .project-arrow { color: var(--accent); }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(26,25,23,0.55);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s;
+      padding: 24px;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border-mid);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--radius); width: 100%; max-width: 880px; max-height: 90vh;
+      overflow-y: auto; position: relative;
+      transform: scale(0.97); transition: transform 0.25s;
+    }
+    .modal-overlay.open .modal { transform: scale(1); }
+    .modal-header {
+      padding: 32px 40px 0; display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .modal-close {
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--ink-faint); cursor: pointer; font-size: 18px; line-height: 1;
+      padding: 6px 10px; transition: color 0.2s; flex-shrink: 0; margin-top: 2px;
+    }
+    .modal-close:hover { color: var(--accent); }
+    .modal-body { padding: 24px 40px 40px; }
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 34px;
+      color: var(--ink); letter-spacing: 0.02em; margin-bottom: 4px;
+    }
+    .modal-subtitle { font-size: 13px; color: var(--ink-faint); margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; }
+    .modal-diagram { border-radius: 2px; overflow: hidden; background: #f0ede8; border: 1px solid var(--border); }
+    .diagram-controls {
+      display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end;
+    }
+    .d3-btn {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 12px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--ink-faint);
+      cursor: pointer; transition: color 0.15s, border-color 0.15s;
+    }
+    .d3-btn:hover { color: var(--accent); border-color: rgba(181,69,27,0.3); }
+    .d3-btn.active { color: var(--accent); border-color: rgba(181,69,27,0.4); background: var(--accent-dim); }
+    .d3-speed-group { display: flex; gap: 4px; margin-left: 8px; border-left: 1px solid var(--border); padding-left: 12px; }
+    .modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 24px; }
+    .modal-stat {
+      background: var(--surface); padding: 16px 20px;
+    }
+    .modal-stat-val {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+      color: var(--accent); line-height: 1; margin-bottom: 4px;
+    }
+    .modal-stat-lbl {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .modal-section { margin-top: 24px; }
+    .modal-section h3 {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink-faint);
+      margin-bottom: 10px;
+    }
+    .modal-section p { font-size: 14px; color: var(--ink-muted); line-height: 1.7; }
+    .modal-links { display: flex; gap: 28px; margin-top: 20px; align-items: center; }
+    .modal-link {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      color: var(--accent); text-decoration: none;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: opacity 0.15s;
+    }
+    .modal-link:hover { opacity: 0.7; }
+
+    /* TIMELINE — line at 8px from .timeline left; dot center also at 8px */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 12px; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--accent), rgba(181,69,27,0.12));
+    }
+    .tl-item { position: relative; padding-bottom: 44px; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      /* dot center = padding(32) + left(-29) + radius(5) = 8px = line position */
+      position: absolute; left: -29px; top: 5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1.5px var(--accent);
+    }
+    .tl-dot.dim { background: var(--ink-faint); box-shadow: 0 0 0 1.5px var(--ink-faint); }
+    .tl-period {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faint);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;
+    }
+    .tl-role {
+      font-family: 'Lora', serif; font-size: 16px; font-weight: 600;
+      color: var(--ink); margin-bottom: 2px;
+    }
+    .tl-company-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .tl-logo {
+      width: 22px; height: 22px; flex-shrink: 0; opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .tl-item:hover .tl-logo { opacity: 0.9; }
+    .tl-logo-badge {
+      width: 22px; height: 22px; flex-shrink: 0;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 7px; font-weight: 600;
+      color: var(--ink-faint); letter-spacing: 0;
+      opacity: 0.7; transition: opacity 0.2s;
+    }
+    .tl-item:hover .tl-logo-badge { opacity: 1; }
+    .tl-logo-hidden { display: none; }
+    .tl-company {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      color: var(--accent); letter-spacing: 0.04em;
+    }
+    .tl-bullets a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(181,69,27,0.35); text-underline-offset: 2px; }
+    .tl-bullets a:hover { text-decoration-color: var(--accent); }
+    .tl-desc a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(181,69,27,0.35); text-underline-offset: 2px; }
+    .tl-desc a:hover { text-decoration-color: var(--accent); }
+    .tl-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.65; max-width: 560px; }
+    .tl-bullets { list-style: none; margin-top: 8px; }
+    .tl-bullets li {
+      font-size: 13px; color: var(--ink-muted); line-height: 1.65;
+      padding-left: 16px; position: relative; margin-bottom: 5px;
+    }
+    .tl-bullets li::before {
+      content: '→'; position: absolute; left: 0; color: var(--accent); font-style: normal;
+    }
+    .tl-bullets strong { color: var(--ink); font-weight: 600; }
+
+    /* PATENTS */
+    .patents-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .patent-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 28px;
+    }
+    .patent-badge {
+      display: inline-block; padding: 2px 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--accent-dim); color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .patent-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.5; font-family: 'Lora', serif; }
+    .patent-title a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border-mid); }
+    .patent-title a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .patent-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .skill-group {
+      background: var(--surface); border: 1px solid var(--border); padding: 24px;
+    }
+    .skill-group-title {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent);
+      margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .skill-tag {
+      padding: 4px 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--ink-muted); letter-spacing: 0.02em;
+    }
+
+    /* BOOKING */
+    .booking-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .booking-card {
+      display: flex; flex-direction: column;
+      background: var(--surface); border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      padding: 28px; text-decoration: none; color: inherit;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .booking-card:hover { box-shadow: 0 4px 24px rgba(181,69,27,0.08); border-color: rgba(181,69,27,0.3); }
+    .booking-meta { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+    .booking-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px;
+    }
+    .booking-badge.free { background: rgba(181,69,27,0.07); color: var(--accent); }
+    .booking-badge.paid { background: var(--accent); color: #fffef9; }
+    .booking-badge.confirm { background: var(--bg); border: 1px solid var(--border); color: var(--ink-faint); }
+    .booking-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+      color: var(--ink); letter-spacing: 0.02em; margin-bottom: 8px;
+    }
+    .booking-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.65; flex: 1; margin-bottom: 20px; }
+    .booking-footer { display: flex; justify-content: space-between; align-items: center; }
+    .booking-duration {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--ink-faint); letter-spacing: 0.08em;
+    }
+    .booking-cta {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 44px 48px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 32px;
+      color: var(--accent); letter-spacing: 0.04em; margin-bottom: 16px;
+    }
+    footer p { font-size: 12px; color: var(--ink-faint); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; }
+    footer a { color: var(--ink-faint); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 28px; justify-content: center; margin-bottom: 16px; }
+    .footer-links a {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      color: var(--ink-muted); text-decoration: none;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-links a svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s, transform 0.55s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* D3 TOOLTIP */
+    .d3-tip {
+      position: absolute; background: var(--surface); border: 1px solid var(--border-mid);
+      padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--ink-muted); pointer-events: none; opacity: 0; transition: opacity 0.15s;
+      max-width: 200px; line-height: 1.5; z-index: 10;
+    }
+    #d3-container { min-height: 400px; }
+    #pipeline-svg { display: block; width: 100%; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 96px 20px 56px; }
+      .hero-keywords { font-size: 17px; }
+      .kw-wrapper { min-width: 180px; }
+      section { padding: 64px 20px; }
+      .section-divider { margin: 0 20px; }
+      .stats { padding: 28px 20px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stat { border-right: none; padding: 0 8px; }
+      .stat-num { font-size: 36px; }
+      .pillars { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .patents-grid { grid-template-columns: 1fr; }
+      .booking-grid { grid-template-columns: 1fr; }
+      .modal-body { padding: 20px 20px 28px; }
+      .modal-header { padding: 24px 20px 0; }
+      .modal-stats { grid-template-columns: repeat(3,1fr); }
+      .modal-stat { padding: 12px 10px; }
+      .modal-stat-val { font-size: 22px; }
+      .tl-company-row { flex-wrap: wrap; }
+      footer { padding: 36px 20px; }
+    }
+    @media (max-width: 420px) {
+      .hero-name { font-size: 58px; }
+      .kw-wrapper { min-width: 150px; }
+      .stat-num { font-size: 30px; }
+      .modal-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SV</div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#career">Career</a>
+    <a href="#skills">Skills</a>
+    <a href="#book">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Senior Product Manager · Microsoft · Kanata, ON</p>
+  <h1 class="hero-name">Shashank<br><span>Vadrevu</span></h1>
+  <p class="hero-keywords">
+    Defining how Multi-Player Agents work in Teams:
+    <span class="kw-wrapper"><span class="kw-track" id="kw-track"></span></span>
+  </p>
+  <p class="hero-role">Agents &amp; Experiences · Microsoft Teams</p>
+  <p class="hero-desc">
+    Product leader at the intersection of LLMs, agent orchestration, and memory. I build systems where agents act autonomously, remember context across sessions, and surface intelligence before users ask for it. Currently at Microsoft, designing proactive multi-agent experiences in Teams.
+  </p>
+  <div class="hero-links">
+    <a href="https://www.linkedin.com/in/jagannath-shashank-vadrevu/" class="hero-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/sjvadrevu" class="hero-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      GitHub
+    </a>
+    <a href="https://sjvadrevu.github.io/ai-brief/" class="hero-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+      AI Brief
+    </a>
+    <a href="#book" class="hero-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Book time
+    </a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-num" data-target="200" data-suffix="M+">0</div>
+      <div class="stat-label">Messages / Day at Nuance</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num" data-target="90" data-suffix="+">0</div>
+      <div class="stat-label">Enterprise Customers</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num" data-target="1" data-suffix="">0</div>
+      <div class="stat-label">Publication</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num" data-prefix="$" data-target="3" data-suffix=".5M">0</div>
+      <div class="stat-label">Revenue Impact, Voice Copilot</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOCUS AREAS -->
+<section id="work">
+  <p class="section-label reveal">Focus areas</p>
+  <h2 class="section-title reveal">What I work on</h2>
+  <p class="section-subtitle reveal">Where I've spent the most time, spanning conversational AI, agent systems, and proactive experiences.</p>
+  <div class="pillars">
+
+    <div class="pillar reveal">
+      <div class="pillar-num">01</div>
+      <h3 class="pillar-title">AI Agents</h3>
+      <p class="pillar-desc">Agent experiences that span multiple tools and steps: memory, context management, tool use, and safe execution in enterprise environments. Building for Teams and M365 Copilot.</p>
+    </div>
+
+    <div class="pillar reveal">
+      <div class="pillar-num">02</div>
+      <h3 class="pillar-title">Proactive Experiences</h3>
+      <p class="pillar-desc">Systems that act without being asked. Event-driven triggers, scheduled monitoring, and intelligent delivery at the right moment. Closing the loop between detection and response.</p>
+    </div>
+
+    <div class="pillar reveal">
+      <div class="pillar-num">03</div>
+      <h3 class="pillar-title">Platform Observability</h3>
+      <p class="pillar-desc">Developer tooling and observability at scale. At Nuance Mix: owned the analytics and developer tools stack, open-sourced Mix CLI, and shipped Prometheus + OpenTelemetry monitoring across pipelines processing 200M+ messages/day.</p>
+    </div>
+
+    <div class="pillar reveal">
+      <div class="pillar-num">04</div>
+      <h3 class="pillar-title">Product Analytics</h3>
+      <p class="pillar-desc">Funnel analysis, A/B testing infrastructure, and pricing strategy. Built analytics foundations at Nuance and SkipTheDishes that enabled data-driven product decisions.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">Side projects</p>
+  <h2 class="section-title reveal">Things I build</h2>
+  <p class="section-subtitle reveal">Personal projects outside of work.</p>
+
+  <div class="project-card reveal" onclick="openModal('aibrief')">
+    <span class="project-tag tag-live">Live</span>
+    <h3 class="project-title">AI Brief</h3>
+    <p class="project-desc">The AI landscape moves faster than any one person can track. New models, funding rounds, research papers, and product launches land across dozens of sources every day. Most of it noise. I built AI Brief to solve this for myself: one distilled briefing of what actually matters in AI, waiting in my inbox every morning at 9 AM.</p>
+    <div class="project-stack">
+      <span class="stack-pill">Claude API</span>
+      <span class="stack-pill">Node.js</span>
+      <span class="stack-pill">GitHub Pages</span>
+      <span class="stack-pill">MCP</span>
+      <span class="stack-pill">Azure Speech</span>
+    </div>
+    <p class="project-hint">Click to see how it works →</p>
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- CAREER -->
+<section id="career">
+  <p class="section-label reveal">Career</p>
+  <h2 class="section-title reveal">Where I've worked</h2>
+  <div class="timeline reveal">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-period">2024 – Present · Vancouver</div>
+      <div class="tl-role">Senior Product Manager, Teams AI &amp; Agents</div>
+      <div class="tl-company-row">
+        <svg class="tl-logo" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-label="Microsoft"><rect x="0" y="0" width="10" height="10" fill="#f25022"/><rect x="11" y="0" width="10" height="10" fill="#7fba00"/><rect x="0" y="11" width="10" height="10" fill="#00a4ef"/><rect x="11" y="11" width="10" height="10" fill="#ffb900"/></svg>
+        <div class="tl-company">Microsoft</div>
+      </div>
+      <ul class="tl-bullets">
+        <li><strong>Agentic orchestration (0→100):</strong> Defined vision and roadmap for agent-driven collaboration; internal pilot in 1 month, private preview in 3 months, <a href="https://techcommunity.microsoft.com/blog/microsoft365copilotblog/announcing-the-public-preview-of-copilot-agents-in-microsoft-teams/4286091" target="_blank" rel="noopener">public preview</a> in 6 months</li>
+        <li><strong>Proactive AI (0→1):</strong> Designed and launched an agent that autonomously intervenes in team conversations; enterprise preview with <strong>80+ customers</strong></li>
+        <li><strong>Multiplayer agents:</strong> Designed memory and coordination model for agents operating in group conversations: multiple agents, shared artifacts, consistent context across participants</li>
+        <li><strong>MCP &amp; extensibility:</strong> Drove MCP integration and markdown-based extensibility for third-party and first-party capabilities</li>
+        <li><strong>Evaluation framework:</strong> Established eval criteria covering task success, safety, latency, and cost per 1k tokens; built automated eval pipelines</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-period">2023 – 2024 · Toronto</div>
+      <div class="tl-role">Senior Product Manager, Copilot Studio</div>
+      <div class="tl-company-row">
+        <svg class="tl-logo" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-label="Microsoft"><rect x="0" y="0" width="10" height="10" fill="#f25022"/><rect x="11" y="0" width="10" height="10" fill="#7fba00"/><rect x="0" y="11" width="10" height="10" fill="#00a4ef"/><rect x="11" y="11" width="10" height="10" fill="#ffb900"/></svg>
+        <div class="tl-company">Microsoft</div>
+      </div>
+      <ul class="tl-bullets">
+        <li>Drove Voice Copilot from concept to private preview with <strong>20+ enterprises</strong>: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/voice-overview" target="_blank" rel="noopener">LLM-based generative answers</a>, <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/voice-build-configure-telephony" target="_blank" rel="noopener">speech capabilities</a>, and enterprise telephony integrations</li>
+        <li>Completed privacy, security, and Responsible AI reviews; achieved production-gate readiness ("Go for Prod")</li>
+        <li>Delivered to enterprise scale: <strong>3,500+ agents</strong> deployed, <strong>$3.5M annual revenue impact</strong> (&gt;$17M over five years)</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-period">2021 – 2023 · Montreal</div>
+      <div class="tl-role">Senior Product Manager, Nuance Mix (Acq. by Microsoft)</div>
+      <div class="tl-company-row">
+        <svg class="tl-logo" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-label="Microsoft"><rect x="0" y="0" width="10" height="10" fill="#f25022"/><rect x="11" y="0" width="10" height="10" fill="#7fba00"/><rect x="0" y="11" width="10" height="10" fill="#00a4ef"/><rect x="11" y="11" width="10" height="10" fill="#ffb900"/></svg>
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=nuance.com" alt="Nuance" onerror="this.style.display='none'">
+        <div class="tl-company">Microsoft / Nuance</div>
+      </div>
+      <ul class="tl-bullets">
+        <li>Owned <a href="https://mix.nuance.com/v3/" target="_blank" rel="noopener">analytics, developer tools, and observability stack</a> for the Nuance Mix™ platform</li>
+        <li>Open-sourced <a href="https://github.com/nuance-communications/mix-cli" target="_blank" rel="noopener">Mix CLI</a>; implemented Prometheus + OpenTelemetry monitoring across pipelines processing <strong>~200M messages/day</strong> and ~1TB/day per tenant</li>
+        <li>Enabled SLA-driven reliability for <strong>90+ enterprise customers</strong></li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-period">2020 – 2021 · Vancouver</div>
+      <div class="tl-role">Technical Program Manager</div>
+      <div class="tl-company-row">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=globalrelay.com" alt="Global Relay" onerror="this.style.display='none'">
+        <div class="tl-company">Global Relay</div>
+      </div>
+      <div class="tl-desc">Owned roadmap for a regulated-industry reporting platform processing <strong>3B+ records</strong> for customers including FINRA, Société Générale, TD Ameritrade, and BlackStone.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-period">2019 – 2020 · Winnipeg</div>
+      <div class="tl-role">Senior Product Owner</div>
+      <div class="tl-company-row">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=skipthedishes.com" alt="SkipTheDishes" onerror="this.style.display='none'">
+        <div class="tl-company">SkipTheDishes</div>
+      </div>
+      <div class="tl-desc">Built dynamic pricing for delivery partners, reducing costs <strong>~10% (~CAD $2.4M/yr)</strong>. Scaled internal platforms across regions, adding <strong>3M+ users</strong>.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-period">2011 – 2017</div>
+      <div class="tl-role">Data Science &amp; Product, Earlier Roles</div>
+      <div class="tl-company-row">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=itcportal.com" alt="ITC" onerror="this.style.display='none'">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=thomsonreuters.com" alt="Thomson Reuters" onerror="this.style.display='none'">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=exvivolabs.com" alt="ExVivo Labs" onerror="this.style.display='none'">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=northbridgeinsurance.ca" alt="Northbridge" onerror="this.style.display='none'">
+        <div class="tl-company">ITC · Thomson Reuters · ExVivo · Northbridge</div>
+      </div>
+      <ul class="tl-bullets">
+        <li><strong>ITC</strong>: ERP Product Owner. Led S/4HANA deployment across <strong>900+ users, 15+ sites</strong>; improved on-time delivery ~5%</li>
+        <li><strong>Thomson Reuters</strong>: Data Scientist. Entity-tagging models (~85% accuracy)</li>
+        <li><strong>ExVivo Labs</strong>: Data Scientist. Imaging ML (CNNs/SVMs), interactive analytics</li>
+        <li><strong>Northbridge</strong>: Sr BPA. Automated data extraction (~95% reduction in manual effort)</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-period">2017 – 2019</div>
+      <div class="tl-role">Master of Management Sciences + Diploma in Data Analytics</div>
+      <div class="tl-company-row">
+        <img class="tl-logo" src="https://www.google.com/s2/favicons?sz=64&domain=uwaterloo.ca" alt="University of Waterloo" onerror="this.style.display='none'">
+        <div class="tl-company">University of Waterloo</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PATENTS -->
+<section>
+  <p class="section-label reveal">Research</p>
+  <h2 class="section-title reveal">Publications</h2>
+  <div class="patents-grid">
+    <div class="patent-card reveal">
+      <span class="patent-badge">ICLR 2025</span>
+      <h3 class="patent-title"><a href="https://arxiv.org/abs/2410.00079" target="_blank" rel="noopener">Interactive Speculative Planning: Enhance Agent Efficiency through Co-design of System and User Interface</a></h3>
+      <p class="patent-desc">Wenyue Hua, Mengting Wan, Ryan Nadel, Shashank Vadrevu, Yongfeng Zhang, Chi Wang</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">Skills</p>
+  <h2 class="section-title reveal">Toolkit</h2>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">GenAI &amp; Agents</div>
+      <div class="skill-tags">
+        <span class="skill-tag">LangChain</span>
+        <span class="skill-tag">LangGraph</span>
+        <span class="skill-tag">AnythingLLM</span>
+        <span class="skill-tag">Azure AI Foundry</span>
+        <span class="skill-tag">Copilot Studio</span>
+        <span class="skill-tag">n8n</span>
+        <span class="skill-tag">Zapier</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Software</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Scala</span>
+        <span class="skill-tag">Claude Code</span>
+        <span class="skill-tag">Cursor</span>
+        <span class="skill-tag">Azure</span>
+        <span class="skill-tag">Git / ADO</span>
+        <span class="skill-tag">Bolt · v0</span>
+        <span class="skill-tag">Figma</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Analytics &amp; Observability</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Prometheus</span>
+        <span class="skill-tag">OpenTelemetry</span>
+        <span class="skill-tag">App Insights</span>
+        <span class="skill-tag">CosmosDB</span>
+        <span class="skill-tag">Data Factory</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Power Automate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK TIME -->
+<hr class="section-divider">
+<section id="book">
+  <p class="section-label reveal">Book time</p>
+  <h2 class="section-title reveal">Let's talk</h2>
+  <p class="section-subtitle reveal">Three ways to connect. Pick whichever fits.</p>
+  <div class="booking-grid">
+
+    <a class="booking-card reveal" href="https://cal.com/jagannath-shashank-vadrevu/15min" target="_blank" rel="noopener">
+      <div class="booking-meta">
+        <span class="booking-badge free">Free</span>
+        <span class="booking-badge confirm">I confirm</span>
+      </div>
+      <h3 class="booking-title">HR &amp; Recruiting</h3>
+      <p class="booking-desc">Reaching out about a role or exploring fit? Book here, no charge. I'll confirm within 24 hours.</p>
+      <div class="booking-footer">
+        <span class="booking-duration">15 min</span>
+        <span class="booking-cta">Book →</span>
+      </div>
+    </a>
+
+    <a class="booking-card reveal" href="https://cal.com/jagannath-shashank-vadrevu/30min" target="_blank" rel="noopener">
+      <div class="booking-meta">
+        <span class="booking-badge free">Free</span>
+        <span class="booking-badge confirm">I confirm</span>
+      </div>
+      <h3 class="booking-title">Let's Connect</h3>
+      <p class="booking-desc">Open to connecting with PMs, founders, and people in the AI space. No agenda needed. I'll confirm within 48 hours.</p>
+      <div class="booking-footer">
+        <span class="booking-duration">20 min</span>
+        <span class="booking-cta">Book →</span>
+      </div>
+    </a>
+
+    <a class="booking-card reveal" href="https://cal.com/jagannath-shashank-vadrevu/pm-career-consult-45-min" target="_blank" rel="noopener">
+      <div class="booking-meta">
+        <span class="booking-badge paid">CAD $50</span>
+      </div>
+      <h3 class="booking-title">PM Career Consult</h3>
+      <p class="booking-desc">For early-career PMs, career switchers, or anyone targeting FAANG-scale roles. Resume review, interview prep, role strategy, breaking into AI product. Payment confirms the slot.</p>
+      <div class="booking-footer">
+        <span class="booking-duration">45 min</span>
+        <span class="booking-cta">Book →</span>
+      </div>
+    </a>
+
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Shashank Vadrevu</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/jagannath-shashank-vadrevu/" class="hero-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/sjvadrevu" class="hero-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      GitHub
+    </a>
+    <a href="https://sjvadrevu.github.io/ai-brief/" class="hero-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+      AI Brief
+    </a>
+  </div>
+  <p>Kanata, Ontario · Open to conversations about AI product &amp; research roles</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">AI Brief</h2>
+        <p class="modal-subtitle">Multi-agent intelligence pipeline · Scheduled or on demand</p>
+      </div>
+      <button type="button" class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-diagram" id="d3-container">
+        <svg id="pipeline-svg"></svg>
+      </div>
+      <div class="diagram-controls">
+        <button type="button" class="d3-btn" id="d3-playpause" onclick="togglePlayPause()">⏸ Pause</button>
+        <button type="button" class="d3-btn" onclick="replayD3()">↺ Replay</button>
+        <div class="d3-speed-group">
+          <button type="button" class="d3-btn d3-speed active" data-speed="0.5" onclick="setSpeed(this)">0.5×</button>
+          <button type="button" class="d3-btn d3-speed" data-speed="1" onclick="setSpeed(this)">1×</button>
+          <button type="button" class="d3-btn d3-speed" data-speed="2" onclick="setSpeed(this)">2×</button>
+        </div>
+      </div>
+
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <div class="modal-stat-val">20+</div>
+          <div class="modal-stat-lbl">Sources per brief</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-val">~9</div>
+          <div class="modal-stat-lbl">Agents per run</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-val">4</div>
+          <div class="modal-stat-lbl">Run modes</div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h3>What the agents actually do</h3>
+        <p>When triggered, an orchestrator agent spawns a wave of collector agents that scan the web in parallel. Results come back as structured JSON. The orchestrator ranks everything by signal strength, then spawns a second wave to research the top stories in depth. A synthesis agent writes the final brief from all that output and pushes it to web, email, and Telegram. A memory layer tracks what was covered across runs so the same story never appears twice. The pipeline runs on a schedule or on demand. 9 AM is the default daily run, not a constraint.</p>
+      </div>
+      <div class="modal-links">
+        <a href="https://sjvadrevu.github.io/ai-brief/" class="modal-link" target="_blank" rel="noopener">Read the brief →</a>
+        <a href="https://github.com/sjvadrevu" class="modal-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d3-tip" id="d3-tip"></div>
+
+<script>
+// KEYWORD VERTICAL CAROUSEL — infinite loop via cloned first item
+const keywords = ['Orchestration', 'Multiplayer Agents', 'Persistent Memory', 'Agent-to-Agent Interaction', 'Model Context Protocol', 'Declarative Skills', 'LLM-as-a-Judge Evals', 'Proactive Actions'];
+const track = document.getElementById('kw-track');
+keywords.forEach(kw => {
+  const s = document.createElement('span');
+  s.className = 'kw-item'; s.textContent = kw; track.appendChild(s);
+});
+// Append clone of first item — carousel slides onto it, then snaps back invisibly
+track.appendChild(track.firstChild.cloneNode(true));
+
+let kwIndex = 0;
+function nextKw() {
+  kwIndex++;
+  track.style.transition = 'transform 0.48s cubic-bezier(0.16, 1, 0.3, 1)';
+  track.style.transform = `translateY(-${kwIndex * 1.32}em)`;
+  if (kwIndex === keywords.length) {
+    // Landed on the clone — snap back to real first item after transition ends
+    setTimeout(() => {
+      track.style.transition = 'none';
+      track.style.transform = 'translateY(0)';
+      kwIndex = 0;
+    }, 500);
+  }
+}
+setInterval(nextKw, 2600);
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.10 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// COUNTER
+function animateCounter(el) {
+  const target = +el.dataset.target;
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix !== undefined ? el.dataset.suffix : '+';
+  let start = 0;
+  const step = target / 40;
+  const interval = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = prefix + Math.floor(start) + suffix;
+    if (start >= target) clearInterval(interval);
+  }, 30);
+}
+const statObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-num[data-target]').forEach(animateCounter);
+      statObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stats-inner').forEach(el => statObserver.observe(el));
+
+// MODAL
+function openModal(id) {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => buildD3(), 100);
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// D3 PIPELINE DIAGRAM — pause/replay/speed support
+let d3Built = false;
+let animPaused = false;
+let animTimeouts = [];
+let autoLoopId = null;
+let animSpeed = 0.5; // multiplier: 0.5 = slowest, 1 = normal, 2 = fast
+
+function T(ms) { return ms / animSpeed; } // scale delay by speed
+
+function setSpeed(btn) {
+  animSpeed = parseFloat(btn.dataset.speed);
+  document.querySelectorAll('.d3-speed').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  replayD3();
+}
+
+function sched(fn, delay) {
+  const id = setTimeout(fn, T(delay));
+  animTimeouts.push(id);
+  return id;
+}
+function clearAllTimeouts() {
+  animTimeouts.forEach(clearTimeout);
+  animTimeouts = [];
+  if (autoLoopId) { clearTimeout(autoLoopId); autoLoopId = null; }
+}
+function togglePlayPause() {
+  animPaused = !animPaused;
+  const btn = document.getElementById('d3-playpause');
+  btn.textContent = animPaused ? '▶ Resume' : '⏸ Pause';
+}
+function replayD3() {
+  animPaused = false;
+  document.getElementById('d3-playpause').textContent = '⏸ Pause';
+  clearAllTimeouts();
+  d3Built = false;
+  d3.select('#pipeline-svg').selectAll('*').remove();
+  buildD3();
+}
+
+function buildD3() {
+  if (d3Built) return;
+  d3Built = true;
+
+  const container = document.getElementById('d3-container');
+  const W = container.clientWidth || 820;
+  const isMobile = W < 600;
+  const H = isMobile ? 520 : 400;
+  const svg = d3.select('#pipeline-svg').attr('width', W).attr('height', H);
+  const tip = document.getElementById('d3-tip');
+
+  // AI Brief color palette for the diagram
+  const C = {
+    accent: '#b5451b',
+    accentDim: 'rgba(181,69,27,0.18)',
+    surface: '#fffef9',
+    border: 'rgba(181,69,27,0.28)',
+    borderDim: 'rgba(26,25,23,0.12)',
+    muted: 'rgba(74,72,69,0.6)',
+    ink: '#1a1917',
+    faint: 'rgba(136,133,128,0.6)',
+    bg: '#f0ede8'
+  };
+
+  const gEdge = svg.append('g');
+  const gDot  = svg.append('g');
+  const gNode = svg.append('g');
+
+  // DEFS
+  const defs = svg.append('defs');
+  const flt = defs.append('filter').attr('id','glow2').attr('x','-60%').attr('y','-60%').attr('width','220%').attr('height','220%');
+  flt.append('feGaussianBlur').attr('stdDeviation','2').attr('result','b');
+  const fm = flt.append('feMerge'); fm.append('feMergeNode').attr('in','b'); fm.append('feMergeNode').attr('in','SourceGraphic');
+
+  function mkArr(id, rev, col) {
+    defs.append('marker').attr('id',id).attr('markerWidth',6).attr('markerHeight',6)
+      .attr('refX',rev?1:5).attr('refY',3).attr('orient','auto')
+      .append('path').attr('d',rev?'M6,0 L0,3 L6,6 Z':'M0,0 L6,3 L0,6 Z').attr('fill',col||C.accent);
+  }
+  mkArr('af2',false); mkArr('ar2',true); mkArr('af2-dim',false,'rgba(136,133,128,0.4)');
+
+  function bez(x1,y1,x2,y2){
+    const mx=(x1+x2)/2, my=(y1+y2)/2;
+    if(Math.abs(y2-y1)>=Math.abs(x2-x1)) return `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;
+    return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+  }
+
+  function edge(x1,y1,x2,y2,{bidir=false,delay=0,dim=false,op=0.35}={}) {
+    const col = dim ? 'rgba(136,133,128,0.28)' : C.border;
+    const mk  = dim ? 'af2-dim' : 'af2';
+    const p = gEdge.append('path').attr('d',bez(x1,y1,x2,y2))
+      .attr('fill','none').attr('stroke',col).attr('stroke-width',1.2).attr('opacity',0)
+      .attr('marker-end',`url(#${mk})`);
+    if(bidir) p.attr('marker-start','url(#ar2)');
+    sched(()=>p.transition().duration(T(500)).attr('opacity',op),delay);
+    return p;
+  }
+
+  function node(x,y,label,sub,{w=100,h=40,delay=0,accent=false,tipTxt=null}={}) {
+    const g=gNode.append('g').attr('transform',`translate(${x},${y})`).attr('opacity',0);
+    const borderCol = accent ? C.accent : C.borderDim;
+    const fillCol   = accent ? 'rgba(181,69,27,0.06)' : C.surface;
+    const bw = accent ? 1.8 : 1;
+    g.append('rect').attr('x',-w/2).attr('y',-h/2).attr('width',w).attr('height',h)
+      .attr('rx',2).attr('fill',fillCol).attr('stroke',borderCol).attr('stroke-width',bw);
+    if(accent) g.append('rect').attr('x',-w/2).attr('y',-h/2).attr('width',3).attr('height',h).attr('rx',0).attr('fill',C.accent);
+    g.append('text').attr('x',accent?2:0).attr('y',sub?-7:0).attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',10).attr('font-weight','600')
+      .attr('fill',accent?C.accent:C.ink).attr('font-family','JetBrains Mono,monospace').text(label);
+    if(sub) g.append('text').attr('x',accent?2:0).attr('y',8).attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',7.5).attr('fill',C.muted).attr('font-family','JetBrains Mono,monospace').text(sub);
+    if(tipTxt){
+      g.style('cursor','default')
+        .on('mouseover',(ev)=>{tip.style.opacity='1';tip.innerHTML=tipTxt.replace(/\n/g,'<br>');g.select('rect').attr('stroke',C.accent).attr('stroke-width',1.5);})
+        .on('mousemove',(ev)=>{const r=container.getBoundingClientRect();tip.style.left=(ev.clientX-r.left+12)+'px';tip.style.top=(ev.clientY-r.top-8)+'px';})
+        .on('mouseout',()=>{tip.style.opacity='0';g.select('rect').attr('stroke',borderCol).attr('stroke-width',bw);});
+    }
+    sched(()=>g.transition().duration(T(350)).attr('opacity',1),delay);
+    return g;
+  }
+
+  function dot(x1,y1,x2,y2,delay,dur=800) {
+    const scaledDur = T(dur);
+    const ph=svg.append('path').attr('d',bez(x1,y1,x2,y2)).attr('fill','none').attr('opacity',0);
+    const len=ph.node().getTotalLength();
+    const c=gDot.append('circle').attr('r',3).attr('fill',C.accent).attr('opacity',0).attr('filter','url(#glow2)');
+    sched(()=>{
+      c.attr('opacity',1);
+      let pauseOffset=0, lastPauseStart=null;
+      const t0=Date.now();
+      const tick=()=>{
+        if(animPaused){
+          if(!lastPauseStart) lastPauseStart=Date.now();
+          requestAnimationFrame(tick); return;
+        }
+        if(lastPauseStart){ pauseOffset+=Date.now()-lastPauseStart; lastPauseStart=null; }
+        const elapsed=Date.now()-t0-pauseOffset;
+        const t=Math.min(elapsed/scaledDur,1),p=ph.node().getPointAtLength(t*len);
+        c.attr('cx',p.x).attr('cy',p.y);
+        t<1?requestAnimationFrame(tick):c.attr('opacity',0);
+      };
+      requestAnimationFrame(tick);
+      sched(()=>ph.remove(),scaledDur+50);
+    },delay);
+  }
+
+  const statusEl=svg.append('text').attr('x',W/2).attr('y',22)
+    .attr('text-anchor','middle').attr('font-family','JetBrains Mono,monospace')
+    .attr('font-size',11).attr('fill',C.accent).attr('letter-spacing','0.08em').text('');
+  function status(txt,delay){
+    sched(()=>{
+      if(animPaused) return;
+      statusEl.transition().duration(300).attr('opacity',0)
+        .on('end',()=>statusEl.text(txt).transition().duration(300).attr('opacity',1));
+    },delay);
+  }
+
+  if (isMobile) {
+    // MOBILE: vertical layout — same animation, reflow coords top-to-bottom
+    const cx = W / 2;
+    const mSx = W*0.26, mSy = 65;   // Scheduled (upper-left)
+    const mDx = W*0.74, mDy = 65;   // On demand (upper-right)
+    const mMx = cx,     mMy = 130;  // Memory (below triggers, above orchestrator)
+    const mAx = cx,     mAy = 210;  // Orchestrator
+    const mGx = W*0.26, mGy = 310;  // Collect (left)
+    const mIx = W*0.74, mIy = 310;  // Deep-dive (right)
+    const mPx = cx,     mPy = 405;  // Synthesize
+    const dLx = W*0.2,  dRx = W*0.8, dCx = cx, dY = 478; // Delivery row
+
+    statusEl.attr('font-size', 9.5);
+
+    // Nodes — triggers and memory on same row
+    node(mSx, mSy, 'Scheduled', 'daily · weekly · monthly', {w:104,h:36,delay:0});
+    node(mDx, mDy, 'On demand', 'Telegram · CLI',           {w:92, h:36,delay:120});
+    node(mAx, mAy, 'Orchestrator', 'spawns all agents',     {w:108,h:46,delay:250,accent:true});
+    node(mGx, mGy, 'Collect',   '4 agents in parallel',    {w:108,h:40,delay:0});
+    node(mIx, mIy, 'Deep-dive', '1 agent per story',       {w:108,h:40,delay:0});
+    node(mPx, mPy, 'Synthesize','write + deliver',         {w:108,h:40,delay:0});
+    node(dLx, dY,  'Web',       'GitHub Pages',  {w:68,h:30,delay:0});
+    node(dCx, dY,  'Email',     'HTML digest',   {w:68,h:30,delay:0});
+    node(dRx, dY,  'Telegram',  'instant push',  {w:68,h:30,delay:0});
+
+    // Memory node (dashed, sits between triggers)
+    const memNode = gNode.append('g').attr('transform',`translate(${mMx},${mMy})`).attr('opacity',0);
+    memNode.append('rect').attr('x',-52).attr('y',-18).attr('width',104).attr('height',36)
+      .attr('rx',2).attr('fill',C.surface).attr('stroke','rgba(181,69,27,0.2)').attr('stroke-width',1).attr('stroke-dasharray','4,3');
+    memNode.append('text').attr('x',0).attr('y',-4).attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',10).attr('font-weight','600').attr('fill','rgba(181,69,27,0.6)').attr('font-family','JetBrains Mono,monospace').text('Memory');
+    memNode.append('text').attr('x',0).attr('y',8).attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',7).attr('fill',C.faint).attr('font-family','JetBrains Mono,monospace').text('coverage · history');
+    sched(()=>memNode.transition().duration(350).attr('opacity',1), 400);
+
+    // Dashed edge: Memory bottom → Orchestrator top (straight vertical)
+    const memEdge = gEdge.append('line')
+      .attr('x1',mMx).attr('y1',mMy+18).attr('x2',mAx).attr('y2',mAy-23)
+      .attr('stroke','rgba(181,69,27,0.18)').attr('stroke-width',1).attr('stroke-dasharray','4,3').attr('opacity',0);
+    sched(()=>memEdge.transition().duration(500).attr('opacity',1), 400);
+
+    // Edges
+    edge(mSx+52, mSy,    mAx-22, mAy-23, {delay:300,dim:true});
+    edge(mDx-46, mDy,    mAx+22, mAy-23, {delay:300,dim:true});
+    edge(mAx-22, mAy+23, mGx+22, mGy-20, {bidir:true,delay:400,op:0.3});
+    edge(mAx+22, mAy+23, mIx-22, mIy-20, {bidir:true,delay:400,op:0.3});
+    edge(mAx,    mAy+23, mPx,    mPy-20, {delay:400,op:0.3});
+    edge(mPx,    mPy+20, dLx,    dY-15,  {delay:500,op:0.3});
+    edge(mPx,    mPy+20, dCx,    dY-15,  {delay:500,op:0.3});
+    edge(mPx,    mPy+20, dRx,    dY-15,  {delay:500,op:0.3});
+
+    // ANIMATION
+    status('Trigger received. Orchestrator initializing…', 0);
+    dot(mSx+52, mSy,    mAx-22, mAy,   900,  700);
+    dot(mDx-46, mDy,    mAx+22, mAy,  1100,  700);
+    dot(mMx,    mMy+18, mAx,    mAy-23,1300,  550);  // memory → orch (check history)
+
+    status('4 collector agents scanning sources in parallel…', 2200);
+    sched(()=>{
+      dot(mAx-22, mAy+23, mGx+22, mGy,   0, 750);
+      dot(mAx-22, mAy+23, mGx+22, mGy, 120, 750);
+      dot(mAx-22, mAy+23, mGx+22, mGy, 240, 750);
+      dot(mAx-22, mAy+23, mGx+22, mGy, 360, 750);
+    }, 2700);
+    sched(()=>{
+      dot(mGx+22, mGy, mAx-22, mAy+23,   0, 750);
+      dot(mGx+22, mGy, mAx-22, mAy+23, 120, 750);
+      dot(mGx+22, mGy, mAx-22, mAy+23, 240, 750);
+      dot(mGx+22, mGy, mAx-22, mAy+23, 360, 750);
+    }, 3900);
+
+    status('5 deep-dive agents researching top stories…', 5100);
+    dot(mAx+22, mAy+23, mIx-22, mIy, 5500, 750);
+    sched(()=>{
+      dot(mAx+22, mAy+23, mIx-22, mIy, 200, 750);
+      dot(mAx+22, mAy+23, mIx-22, mIy, 420, 750);
+      dot(mAx+22, mAy+23, mIx-22, mIy, 640, 750);
+    }, 5500);
+    sched(()=>{
+      dot(mIx-22, mIy, mAx+22, mAy+23, 100, 750);
+      dot(mIx-22, mIy, mAx+22, mAy+23, 340, 750);
+    }, 7500);
+
+    status('Synthesis agent writing the brief…', 9200);
+    dot(mAx, mAy+23, mPx, mPy-20, 9700, 700);
+
+    status('Delivery agent pushing to web, email, Telegram…', 10700);
+    sched(()=>{
+      dot(mPx, mPy+20, dLx, dY-15,   0, 680);
+      dot(mPx, mPy+20, dCx, dY-15,  180, 680);
+      dot(mPx, mPy+20, dRx, dY-15,  360, 680);
+    }, 11000);
+
+    dot(mAx, mAy-23, mMx, mMy+18, 12200, 550);  // orch → memory (log coverage)
+    status('Done. Coverage logged. Same story won\'t run again.', 13100);
+
+  } else {
+    // DESKTOP layout
+    const xTrig = W * 0.07;
+    const xAgt  = W * 0.25;
+    const xGath = W * 0.52;
+    const xInv  = W * 0.52;
+    const xPub  = W * 0.75;
+    const xCh   = W * 0.93;
+
+    const agtY  = H * 0.38;
+    const gathY = H * 0.20;
+    const invY  = H * 0.58;
+    const pubY  = H * 0.38;
+    const chYs  = [H*0.20, H*0.38, H*0.58];
+    const memY  = H * 0.82;
+
+    // NODES
+    node(xTrig, agtY-52, 'Scheduled', 'daily · weekly · monthly', {w:112,h:36,delay:0, tipTxt:'Runs on a cron schedule\nSupports daily, weekly, and monthly briefs\n9 AM is the default daily run'});
+    node(xTrig, agtY+48, 'On demand', 'Telegram · CLI', {w:96,h:36,delay:120, tipTxt:'Triggered manually at any time\nvia Telegram bot or command line'});
+
+    node(xAgt, agtY, 'Orchestrator', 'spawns all agents', {w:108,h:46,delay:250,accent:true,
+      tipTxt:'Spawns collector and deep-dive agents\nRanks stories by signal strength\nTracks coverage history across runs'});
+
+    node(xGath, gathY, 'Collect', '4 agents in parallel', {w:114,h:40,delay:0,
+      tipTxt:'4 agents run simultaneously\nGmail, Reddit/HN, HuggingFace, Product Hunt\nEach returns structured JSON'});
+
+    node(xInv, invY, 'Deep-dive', '1 agent per story', {w:114,h:40,delay:0,
+      tipTxt:'One agent per top story\nFetches full article content\nExtracts facts and key context'});
+
+    node(xPub, pubY, 'Synthesize', 'write + deliver', {w:108,h:40,delay:0,
+      tipTxt:'Writes the final brief\nPushes to GitHub Pages\nDelivers to each channel'});
+
+    node(xCh, chYs[0], 'Web',      'GitHub Pages',  {w:90,h:34,delay:0,tipTxt:'sjvadrevu.github.io/ai-brief'});
+    node(xCh, chYs[1], 'Email',    'HTML digest',   {w:90,h:34,delay:0,tipTxt:'Full HTML brief to inbox'});
+    node(xCh, chYs[2], 'Telegram', 'instant push',  {w:90,h:34,delay:0,tipTxt:'Formatted message via bot'});
+
+    // Memory node
+    const memNode = gNode.append('g').attr('transform',`translate(${xAgt},${memY})`).attr('opacity',0);
+    memNode.append('rect').attr('x',-52).attr('y',-18).attr('width',104).attr('height',36)
+      .attr('rx',2).attr('fill',C.surface).attr('stroke','rgba(181,69,27,0.2)').attr('stroke-width',1)
+      .attr('stroke-dasharray','4,3');
+    memNode.append('text').attr('x',0).attr('y',-4).attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',10).attr('font-weight','600').attr('fill','rgba(181,69,27,0.6)').attr('font-family','JetBrains Mono,monospace').text('Memory');
+    memNode.append('text').attr('x',0).attr('y',8).attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',7).attr('fill',C.faint).attr('font-family','JetBrains Mono,monospace').text('coverage · history');
+    memNode.style('cursor','default')
+      .on('mouseover',()=>{tip.style.opacity='1';tip.innerHTML='Tracks what was covered<br>Prevents duplicate stories<br>Persists across runs';})
+      .on('mousemove',(ev)=>{const r=container.getBoundingClientRect();tip.style.left=(ev.clientX-r.left+12)+'px';tip.style.top=(ev.clientY-r.top-8)+'px';})
+      .on('mouseout',()=>{tip.style.opacity='0';});
+    sched(()=>memNode.transition().duration(350).attr('opacity',1), 400);
+
+    // EDGES
+    const memEdge = gEdge.append('line')
+      .attr('x1',xAgt).attr('y1',agtY+23).attr('x2',xAgt).attr('y2',memY-18)
+      .attr('stroke','rgba(181,69,27,0.18)').attr('stroke-width',1).attr('stroke-dasharray','4,3').attr('opacity',0);
+    sched(()=>memEdge.transition().duration(500).attr('opacity',1), 400);
+
+    edge(xTrig+44,agtY-52, xAgt-54,agtY-8,  {delay:300,dim:true});
+    edge(xTrig+44,agtY+48, xAgt-54,agtY+8,  {delay:300,dim:true});
+    edge(xAgt+54,agtY, xGath-57,gathY, {bidir:true,delay:400,op:0.3});
+    edge(xAgt+54,agtY, xInv-57,invY,   {bidir:true,delay:400,op:0.3});
+    edge(xAgt+54,agtY, xPub-54,pubY,   {delay:400,op:0.3});
+    edge(xPub+54,pubY, xCh-45,chYs[0], {delay:500,op:0.3});
+    edge(xPub+54,pubY, xCh-45,chYs[1], {delay:500,op:0.3});
+    edge(xPub+54,pubY, xCh-45,chYs[2], {delay:500,op:0.3});
+
+    // ANIMATION
+    status('Trigger received. Orchestrator initializing…', 0);
+    dot(xTrig+44,agtY-52, xAgt-54,agtY,  900, 700);
+    dot(xTrig+44,agtY+48, xAgt-54,agtY, 1100, 700);
+    dot(xAgt,memY-18, xAgt,agtY+23,     1300, 550);
+
+    status('4 collector agents scanning sources in parallel…', 2200);
+    sched(()=>{
+      dot(xAgt+54,agtY, xGath-57,gathY,   0, 750);
+      dot(xAgt+54,agtY, xGath-57,gathY, 120, 750);
+      dot(xAgt+54,agtY, xGath-57,gathY, 240, 750);
+      dot(xAgt+54,agtY, xGath-57,gathY, 360, 750);
+    }, 2700);
+    sched(()=>{
+      dot(xGath-57,gathY, xAgt+54,agtY,   0, 750);
+      dot(xGath-57,gathY, xAgt+54,agtY, 120, 750);
+      dot(xGath-57,gathY, xAgt+54,agtY, 240, 750);
+      dot(xGath-57,gathY, xAgt+54,agtY, 360, 750);
+    }, 3900);
+
+    status('5 deep-dive agents researching top stories…', 5100);
+    dot(xAgt+54,agtY, xInv-57,invY, 5500, 750);
+    sched(()=>{
+      dot(xAgt+54,agtY, xInv-57,invY, 200, 750);
+      dot(xAgt+54,agtY, xInv-57,invY, 420, 750);
+      dot(xAgt+54,agtY, xInv-57,invY, 640, 750);
+    }, 5500);
+    sched(()=>{
+      dot(xInv-57,invY, xAgt+54,agtY, 100, 750);
+      dot(xInv-57,invY, xAgt+54,agtY, 340, 750);
+    }, 7500);
+
+    status('Synthesis agent writing the brief…', 9200);
+    dot(xAgt+54,agtY, xPub-54,pubY, 9700, 700);
+
+    status('Delivery agent pushing to web, email, Telegram…', 10700);
+    sched(()=>{
+      dot(xPub+54,pubY, xCh-45,chYs[0],   0, 680);
+      dot(xPub+54,pubY, xCh-45,chYs[1], 180, 680);
+      dot(xPub+54,pubY, xCh-45,chYs[2], 360, 680);
+    }, 11000);
+
+    dot(xAgt,agtY+23, xAgt,memY-18, 12200, 550);
+    status('Done. Coverage logged. Same story won\'t run again.', 13100);
+  }
+
+  sched(()=>{ d3Built=false; svg.selectAll('*').remove(); buildD3(); }, 19000);
+}
+
+</script>
+</body>
+</html>
