@@ -189,6 +189,13 @@
     .pillar-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
 
     /* PROJECTS */
+    .modal-panel-hidden { display: none; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 0;
+    }
     .project-card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 32px;
@@ -486,6 +493,7 @@
       .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
       .stat { border-right: none; padding: 0 8px; }
       .stat-num { font-size: 36px; }
+      .projects-grid { grid-template-columns: 1fr; }
       .pillars { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; }
       .patents-grid { grid-template-columns: 1fr; }
@@ -616,18 +624,35 @@
   <h2 class="section-title reveal">Things I build</h2>
   <p class="section-subtitle reveal">Personal projects outside of work.</p>
 
-  <div class="project-card reveal" onclick="openModal('aibrief')">
-    <span class="project-tag tag-live">Live</span>
-    <h3 class="project-title">AI Brief</h3>
-    <p class="project-desc">The AI landscape moves faster than any one person can track. New models, funding rounds, research papers, and product launches land across dozens of sources every day. Most of it noise. I built AI Brief to solve this for myself: one distilled briefing of what actually matters in AI, waiting in my inbox every morning at 9 AM.</p>
-    <div class="project-stack">
-      <span class="stack-pill">Claude API</span>
-      <span class="stack-pill">Node.js</span>
-      <span class="stack-pill">GitHub Pages</span>
-      <span class="stack-pill">MCP</span>
-      <span class="stack-pill">Azure Speech</span>
+  <div class="projects-grid">
+
+    <div class="project-card reveal" onclick="openModal('aibrief')">
+      <span class="project-tag tag-live">Live</span>
+      <h3 class="project-title">AI Brief</h3>
+      <p class="project-desc">The AI landscape moves faster than any one person can track. New models, funding rounds, research papers, and product launches land across dozens of sources every day. Most of it noise. I built AI Brief to solve this for myself: one distilled briefing of what actually matters in AI, waiting in my inbox every morning at 9 AM.</p>
+      <div class="project-stack">
+        <span class="stack-pill">Claude API</span>
+        <span class="stack-pill">Node.js</span>
+        <span class="stack-pill">GitHub Pages</span>
+        <span class="stack-pill">MCP</span>
+        <span class="stack-pill">Azure Speech</span>
+      </div>
+      <p class="project-hint">Click to see how it works →</p>
     </div>
-    <p class="project-hint">Click to see how it works →</p>
+
+    <div class="project-card reveal" onclick="openModal('todoist')">
+      <span class="project-tag tag-live">Live</span>
+      <h3 class="project-title">Todoist MCP Server</h3>
+      <p class="project-desc">Todoist's official MCP uses OAuth but issues no refresh tokens. Every expiry forced a manual re-auth, impossible to fix from the Claude iOS app. I built a custom MCP server using Todoist's permanent API token, hosted on Azure, that works across Claude web, Claude Code, and Claude mobile with zero re-authentication.</p>
+      <div class="project-stack">
+        <span class="stack-pill">MCP</span>
+        <span class="stack-pill">Node.js</span>
+        <span class="stack-pill">Todoist API</span>
+        <span class="stack-pill">Azure App Service</span>
+      </div>
+      <p class="project-hint">Click to see how it works →</p>
+    </div>
+
   </div>
 
 </section>
@@ -878,6 +903,9 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal" id="modal-content">
+
+    <!-- AI BRIEF MODAL -->
+    <div id="modal-aibrief">
     <div class="modal-header">
       <div>
         <h2 class="modal-title">AI Brief</h2>
@@ -922,6 +950,50 @@
         <a href="https://github.com/sjvadrevu" class="modal-link" target="_blank" rel="noopener">GitHub →</a>
       </div>
     </div>
+    </div><!-- end modal-aibrief -->
+
+    <!-- TODOIST MCP SERVER MODAL -->
+    <div id="modal-todoist" class="modal-panel-hidden">
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">Todoist MCP Server</h2>
+        <p class="modal-subtitle">Custom MCP server · Permanent auth · Zero re-authentication</p>
+      </div>
+      <button type="button" class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <div class="modal-stat-val">33</div>
+          <div class="modal-stat-lbl">MCP tools</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-val">0</div>
+          <div class="modal-stat-lbl">Re-auths ever</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-val">3</div>
+          <div class="modal-stat-lbl">Claude surfaces</div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h3>The problem</h3>
+        <p>Todoist's official MCP server uses OAuth, but Todoist doesn't issue refresh tokens. Every time the access token expired, Claude forced a manual re-authentication. On the Claude iOS app, that's impossible to fix without switching to a browser. I evaluated 10+ alternatives. Every one failed on at least one surface: wrong auth model, local stdio only, punishing rate limits, or unverified indie proxies.</p>
+      </div>
+      <div class="modal-section">
+        <h3>The solution</h3>
+        <p>Todoist issues a permanent API token that never expires. A custom Node.js MCP server authenticates with that token, stored as an Azure environment variable, and exposes a hosted HTTPS endpoint. Claude connects to it as a remote MCP connector. One setup, works identically on Claude web, Claude Code, and Claude mobile. Forever, with no re-authentication.</p>
+      </div>
+      <div class="modal-section">
+        <h3>What it can do</h3>
+        <p>33 tools covering tasks, projects, sections, labels, comments, reminders, and productivity stats. Natural language in, Todoist actions out. Ask Claude to create a task due next Monday in a specific project, move a task, add a reminder 30 minutes before, or pull your karma score. All without leaving the conversation.</p>
+      </div>
+      <div class="modal-links">
+        <a href="https://github.com/sjvadrevu/todoist-mcp-server" class="modal-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+    </div><!-- end modal-todoist -->
+
   </div>
 </div>
 
@@ -985,9 +1057,12 @@ document.querySelectorAll('.stats-inner').forEach(el => statObserver.observe(el)
 
 // MODAL
 function openModal(id) {
+  // Hide all modal panels, then show the requested one
+  document.querySelectorAll('#modal-content > div[id^="modal-"]').forEach(el => el.style.display = 'none');
+  document.getElementById('modal-' + id).style.display = 'block';
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  setTimeout(() => buildD3(), 100);
+  if (id === 'aibrief') setTimeout(() => buildD3(), 100);
 }
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
