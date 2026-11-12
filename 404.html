@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page not found</title>
 <script>
-  // The AI Brief moved to The Median Canadian. Old links (sjvadrevu.github.io/ai-brief/...,
+  // The AI Brief moved to ai.mediancanadian.ca (November 12, 2026). Old links (sjvadrevu.github.io/ai-brief/...,
   // which GitHub forwards to vadrevu.ca/ai-brief/...) land here and go on to the same page there.
   (function () {
     var p = location.pathname;
     if (p === '/ai-brief' || p.indexOf('/ai-brief/') === 0) {
-      location.replace('https://mediancanadian.ca' + p + location.search + location.hash);
+      location.replace('https://ai.mediancanadian.ca' + (p.slice('/ai-brief'.length) || '/') + location.search + location.hash);
     }
   })();
 </script>
@@ -24,7 +24,7 @@
 <body>
 <main>
   <h1>Page not found</h1>
-  <p>This page does not exist. <a href="/">Go to the home page</a>, or find the AI Brief at <a href="https://mediancanadian.ca/ai-brief/">mediancanadian.ca/ai-brief</a>.</p>
+  <p>This page does not exist. <a href="/">Go to the home page</a>, or find the AI Brief at <a href="https://ai.mediancanadian.ca/">ai.mediancanadian.ca</a>.</p>
 </main>
 </body>
 </html>
