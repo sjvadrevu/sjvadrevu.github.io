@@ -609,8 +609,8 @@
   <div class="nav-logo">SV</div>
   <div class="nav-links">
     <a href="#work">Work</a>
-    <a href="#projects" class="nav-keep">Beyond work</a>
     <a href="#career">Career</a>
+    <a href="#projects" class="nav-keep">Beyond work</a>
     <a href="#skills">Skills</a>
     <a href="#book">Contact</a>
   </div>
@@ -668,7 +668,7 @@
 
 <!-- FOCUS AREAS -->
 <section id="work">
-  <p class="section-label reveal">Focus areas</p>
+  <p class="section-label reveal">At work</p>
   <h2 class="section-title reveal">What I work on</h2>
   <p class="section-subtitle reveal">Where I spend my time: product strategy, working across teams to deliver it, and building the agent systems myself.</p>
   <div class="pillars">
@@ -698,71 +698,6 @@
     </div>
 
   </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- PROJECTS -->
-<section id="projects">
-  <p class="section-label reveal">Beyond work</p>
-  <h2 class="section-title reveal">I build agents for myself, too</h2>
-  <p class="section-subtitle reveal">The same team of AI agents finds, researches, writes and checks two publications: a daily read on AI agents, and a weekly look at Canada through its numbers.</p>
-  <h3 class="bw-step reveal">How it works</h3>
-  <div class="modal-diagram nr-diagram reveal" id="d3-container-b">
-    <svg id="pipeline-svg-b"></svg>
-  </div>
-  <div class="diagram-controls">
-    <button type="button" class="d3-btn" id="d3-playpause-b" onclick="togglePlayPauseB()">⏸ Pause</button>
-    <button type="button" class="d3-btn" onclick="replayD3B()">↺ Replay</button>
-    <div class="d3-speed-group">
-      <button type="button" class="d3-btn d3-speed-b active" data-speed="0.5" onclick="setSpeedB(this)">0.5×</button>
-      <button type="button" class="d3-btn d3-speed-b" data-speed="1" onclick="setSpeedB(this)">1×</button>
-      <button type="button" class="d3-btn d3-speed-b" data-speed="2" onclick="setSpeedB(this)">2×</button>
-    </div>
-  </div>
-
-
-
-  <h3 class="bw-step reveal">The publications</h3>
-  <div class="samples">
-    <a class="sample reveal" href="https://ai.mediancanadian.ca/" target="_blank" rel="noopener">
-      <span class="sample-pic sample-pic-brief"><img src="https://ai.mediancanadian.ca/assets/trends-card.svg" alt="AI Brief: the ideas in AI rising fastest this month" loading="lazy"></span>
-      <span class="sample-body">
-        <span class="sample-kicker">Daily</span>
-        <span class="sample-name">AI Brief</span>
-        <span class="sample-desc">What changed in AI agents today, and why it matters</span>
-        <span class="sample-go">Read ↗</span>
-      </span>
-    </a>
-    <a class="sample reveal" href="https://mediancanadian.ca/" target="_blank" rel="noopener">
-      <span class="sample-pic"><img src="https://mediancanadian.ca/covers/week-03-cover.jpg" alt="The Median Canadian: B.C. elects Conservatives, the party's first majority since 1928" loading="lazy"></span>
-      <span class="sample-body">
-        <span class="sample-kicker">Weekly</span>
-        <span class="sample-name">The Median Canadian</span>
-        <span class="sample-desc">Canada explained through numbers</span>
-        <span class="sample-go">Read ↗</span>
-      </span>
-    </a>
-  </div>
-
-  <h3 class="bw-step reveal">Also built</h3>
-  <div class="projects-grid">
-
-    <div class="project-card reveal" onclick="openModal('todoist')">
-      <span class="project-tag tag-live">Live</span>
-      <h3 class="project-title">Todoist MCP Server</h3>
-      <p class="project-desc">Todoist's official MCP uses OAuth but issues no refresh tokens. Every expiry forced a manual re-auth, impossible to fix from the Claude iOS app. I built a custom MCP server using Todoist's permanent API token, hosted on Azure, that works across Claude web, Claude Code, and Claude mobile with zero re-authentication.</p>
-      <div class="project-stack">
-        <span class="stack-pill">MCP</span>
-        <span class="stack-pill">Node.js</span>
-        <span class="stack-pill">Todoist API</span>
-        <span class="stack-pill">Azure App Service</span>
-      </div>
-      <p class="project-hint">Click to see how it works →</p>
-    </div>
-
-  </div>
-
 </section>
 
 <hr class="section-divider">
@@ -876,7 +811,7 @@
 <!-- PATENTS -->
 <section>
   <p class="section-label reveal">Research</p>
-  <h2 class="section-title reveal">Publications</h2>
+  <h2 class="section-title reveal">Published research</h2>
   <div class="patents-grid">
     <div class="patent-card reveal">
       <span class="patent-badge">ICLR 2025</span>
@@ -884,6 +819,71 @@
       <p class="patent-desc">Wenyue Hua, Mengting Wan, Ryan Nadel, Shashank Vadrevu, Yongfeng Zhang, Chi Wang</p>
     </div>
   </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">Beyond work</p>
+  <h2 class="section-title reveal">I build agents for myself, too</h2>
+  <p class="section-subtitle reveal">AI agents I built find, research, write and check two publications: a daily read on AI agents, and a weekly look at Canada through its numbers.</p>
+  <h3 class="bw-step reveal">How it works</h3>
+  <div class="modal-diagram nr-diagram reveal" id="d3-container-b">
+    <svg id="pipeline-svg-b"></svg>
+  </div>
+  <div class="diagram-controls">
+    <button type="button" class="d3-btn" id="d3-playpause-b" onclick="togglePlayPauseB()">⏸ Pause</button>
+    <button type="button" class="d3-btn" onclick="replayD3B()">↺ Replay</button>
+    <div class="d3-speed-group">
+      <button type="button" class="d3-btn d3-speed-b active" data-speed="0.5" onclick="setSpeedB(this)">0.5×</button>
+      <button type="button" class="d3-btn d3-speed-b" data-speed="1" onclick="setSpeedB(this)">1×</button>
+      <button type="button" class="d3-btn d3-speed-b" data-speed="2" onclick="setSpeedB(this)">2×</button>
+    </div>
+  </div>
+
+
+
+  <h3 class="bw-step reveal">The publications</h3>
+  <div class="samples">
+    <a class="sample reveal" href="https://ai.mediancanadian.ca/" target="_blank" rel="noopener">
+      <span class="sample-pic sample-pic-brief"><img src="https://ai.mediancanadian.ca/assets/trends-card.svg" alt="AI Brief: the ideas in AI rising fastest this month" loading="lazy"></span>
+      <span class="sample-body">
+        <span class="sample-kicker">Daily</span>
+        <span class="sample-name">AI Brief</span>
+        <span class="sample-desc">What changed in AI agents today, and why it matters</span>
+        <span class="sample-go">Read ↗</span>
+      </span>
+    </a>
+    <a class="sample reveal" href="https://mediancanadian.ca/" target="_blank" rel="noopener">
+      <span class="sample-pic"><img src="https://mediancanadian.ca/covers/week-03-cover.jpg" alt="The Median Canadian: B.C. elects Conservatives, the party's first majority since 1928" loading="lazy"></span>
+      <span class="sample-body">
+        <span class="sample-kicker">Weekly</span>
+        <span class="sample-name">The Median Canadian</span>
+        <span class="sample-desc">Canada explained through numbers</span>
+        <span class="sample-go">Read ↗</span>
+      </span>
+    </a>
+  </div>
+
+  <h3 class="bw-step reveal">Also built</h3>
+  <div class="projects-grid">
+
+    <div class="project-card reveal" onclick="openModal('todoist')">
+      <span class="project-tag tag-live">Live</span>
+      <h3 class="project-title">Todoist MCP Server</h3>
+      <p class="project-desc">Todoist's official MCP uses OAuth but issues no refresh tokens. Every expiry forced a manual re-auth, impossible to fix from the Claude iOS app. I built a custom MCP server using Todoist's permanent API token, hosted on Azure, that works across Claude web, Claude Code, and Claude mobile with zero re-authentication.</p>
+      <div class="project-stack">
+        <span class="stack-pill">MCP</span>
+        <span class="stack-pill">Node.js</span>
+        <span class="stack-pill">Todoist API</span>
+        <span class="stack-pill">Azure App Service</span>
+      </div>
+      <p class="project-hint">Click to see how it works →</p>
+    </div>
+
+  </div>
+
 </section>
 
 <hr class="section-divider">
