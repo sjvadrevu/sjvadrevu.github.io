@@ -526,6 +526,10 @@
     .nav-pubs a:hover { text-decoration: underline; text-underline-offset: 3px; }
     .nav-links { margin-left: auto; margin-right: 32px; }
     .footer-links { flex-wrap: wrap; gap: 14px 28px; }
+    .hero-bridge { max-width: 560px; font-size: 15px; color: var(--ink); line-height: 1.7; margin: -22px 0 36px;
+      opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
+    .hero-bridge a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(181,69,27,0.35); text-underline-offset: 2px; white-space: nowrap; }
+    #projects .diagram-controls { margin-bottom: 40px; }
     .pubs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 640px; margin: 0 0 14px;
       opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
     .pub { display: flex; flex-direction: column; gap: 4px; padding: 18px 20px 16px; text-decoration: none; color: inherit;
@@ -575,7 +579,6 @@
 <nav>
   <div class="nav-logo">SV</div>
   <div class="nav-links">
-    <a href="#newsroom">Newsroom</a>
     <a href="#work">Work</a>
     <a href="#projects">Projects</a>
     <a href="#career">Career</a>
@@ -600,21 +603,7 @@
   <p class="hero-desc">
     I work on product strategy for AI agents and build them hands-on. At Microsoft I set the vision and roadmap for agents in Teams, delivered across a cross-team group of PMs, from a first pilot to three public launches in a year. I start from where the time and money go, redesign the whole process with AI, and prototype the hard parts myself.
   </p>
-  <div class="pubs">
-    <a class="pub" href="https://ai.mediancanadian.ca/" target="_blank" rel="noopener">
-      <span class="pub-kicker">Daily</span>
-      <span class="pub-name">AI Brief</span>
-      <span class="pub-desc">What changed in AI agents today, and why it matters</span>
-      <span class="pub-go">Read it ↗</span>
-    </a>
-    <a class="pub" href="https://mediancanadian.ca/" target="_blank" rel="noopener">
-      <span class="pub-kicker">Weekly</span>
-      <span class="pub-name">The Median Canadian</span>
-      <span class="pub-desc">Canada explained through numbers</span>
-      <span class="pub-go">Read it ↗</span>
-    </a>
-  </div>
-  <p class="pubs-engine">Both are made by my AI newsroom: agents find, research and fact-check every story, and I approve it before it goes out. <a href="#newsroom" class="pubs-how">How it works ↓</a></p>
+  <p class="hero-bridge">Outside work, a team of AI agents I built runs two publications: <a href="https://ai.mediancanadian.ca/" target="_blank" rel="noopener">AI Brief</a> and <a href="https://mediancanadian.ca/" target="_blank" rel="noopener">The Median Canadian</a>.</p>
   <div class="hero-links">
     <a href="https://www.linkedin.com/in/jagannath-shashank-vadrevu/" class="hero-link" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -652,27 +641,6 @@
     </div>
   </div>
 </div>
-
-<!-- NEWSROOM: the AI agents behind both publications -->
-<section id="newsroom">
-  <p class="section-label reveal">How they're made</p>
-  <h2 class="section-title reveal">One AI newsroom, two publications</h2>
-  <p class="section-subtitle reveal">The same agents make both. They find the stories, research them and check every claim, and nothing goes out until I approve it. Tap a publication in the diagram to read it.</p>
-  <div class="modal-diagram nr-diagram reveal" id="d3-container-b">
-    <svg id="pipeline-svg-b"></svg>
-  </div>
-  <div class="diagram-controls">
-    <button type="button" class="d3-btn" id="d3-playpause-b" onclick="togglePlayPauseB()">⏸ Pause</button>
-    <button type="button" class="d3-btn" onclick="replayD3B()">↺ Replay</button>
-    <div class="d3-speed-group">
-      <button type="button" class="d3-btn d3-speed-b active" data-speed="0.5" onclick="setSpeedB(this)">0.5×</button>
-      <button type="button" class="d3-btn d3-speed-b" data-speed="1" onclick="setSpeedB(this)">1×</button>
-      <button type="button" class="d3-btn d3-speed-b" data-speed="2" onclick="setSpeedB(this)">2×</button>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider">
 
 <!-- FOCUS AREAS -->
 <section id="work">
@@ -714,7 +682,20 @@
 <section id="projects">
   <p class="section-label reveal">Side projects</p>
   <h2 class="section-title reveal">Things I build</h2>
-  <p class="section-subtitle reveal">Personal projects outside of work.</p>
+  <p class="section-subtitle reveal">Outside work I build agents for myself. One team of AI agents finds, researches and checks the stories for both of my publications, and nothing goes out until I approve it. Tap a publication in the diagram to read it.</p>
+  <div class="modal-diagram nr-diagram reveal" id="d3-container-b">
+    <svg id="pipeline-svg-b"></svg>
+  </div>
+  <div class="diagram-controls">
+    <button type="button" class="d3-btn" id="d3-playpause-b" onclick="togglePlayPauseB()">⏸ Pause</button>
+    <button type="button" class="d3-btn" onclick="replayD3B()">↺ Replay</button>
+    <div class="d3-speed-group">
+      <button type="button" class="d3-btn d3-speed-b active" data-speed="0.5" onclick="setSpeedB(this)">0.5×</button>
+      <button type="button" class="d3-btn d3-speed-b" data-speed="1" onclick="setSpeedB(this)">1×</button>
+      <button type="button" class="d3-btn d3-speed-b" data-speed="2" onclick="setSpeedB(this)">2×</button>
+    </div>
+  </div>
+
 
   <div class="projects-grid">
 
@@ -733,19 +714,6 @@
       <p class="project-hint">Click to see how it works →</p>
     </div>
 
-    <div class="project-card reveal" onclick="openModal('todoist')">
-      <span class="project-tag tag-live">Live</span>
-      <h3 class="project-title">Todoist MCP Server</h3>
-      <p class="project-desc">Todoist's official MCP uses OAuth but issues no refresh tokens. Every expiry forced a manual re-auth, impossible to fix from the Claude iOS app. I built a custom MCP server using Todoist's permanent API token, hosted on Azure, that works across Claude web, Claude Code, and Claude mobile with zero re-authentication.</p>
-      <div class="project-stack">
-        <span class="stack-pill">MCP</span>
-        <span class="stack-pill">Node.js</span>
-        <span class="stack-pill">Todoist API</span>
-        <span class="stack-pill">Azure App Service</span>
-      </div>
-      <p class="project-hint">Click to see how it works →</p>
-    </div>
-
     <div class="project-card reveal" onclick="openModal('median')">
       <span class="project-tag tag-live">Live</span>
       <h3 class="project-title">The Median Canadian</h3>
@@ -756,6 +724,19 @@
         <span class="stack-pill">Python</span>
         <span class="stack-pill">GitHub Pages</span>
         <span class="stack-pill">Open data</span>
+      </div>
+      <p class="project-hint">Click to see how it works →</p>
+    </div>
+
+    <div class="project-card reveal" onclick="openModal('todoist')">
+      <span class="project-tag tag-live">Live</span>
+      <h3 class="project-title">Todoist MCP Server</h3>
+      <p class="project-desc">Todoist's official MCP uses OAuth but issues no refresh tokens. Every expiry forced a manual re-auth, impossible to fix from the Claude iOS app. I built a custom MCP server using Todoist's permanent API token, hosted on Azure, that works across Claude web, Claude Code, and Claude mobile with zero re-authentication.</p>
+      <div class="project-stack">
+        <span class="stack-pill">MCP</span>
+        <span class="stack-pill">Node.js</span>
+        <span class="stack-pill">Todoist API</span>
+        <span class="stack-pill">Azure App Service</span>
       </div>
       <p class="project-hint">Click to see how it works →</p>
     </div>
